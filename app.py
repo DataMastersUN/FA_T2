@@ -12,4 +12,4 @@ def app_update():
 
 @app.route("/")
 def home():
-    return "Flask app test"
+    return "Flask app second test"
