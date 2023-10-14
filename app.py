@@ -1,6 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
+from importlib import import_module
 import git
+
+
 app = Flask(__name__)
+module = import_module('home.routes'.format('home'))
+app.register_blueprint(module.blueprint)
 
 @app.route('/app_update', methods=['POST'])
 def app_update():
@@ -12,4 +17,5 @@ def app_update():
 
 @app.route("/")
 def home():
-    return "Flask app second test"
+    return render_template('home/index.html')
+
