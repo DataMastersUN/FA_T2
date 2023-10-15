@@ -1,0 +1,258 @@
+codigo,barrio
+0101,Santo Domingo Savio No. 1
+0102,Santo Domingo Savio No. 2
+0103,Popular
+0104,Granizal
+0105,Moscú No. 2
+0106,Villa de Guadalupe
+0107,San Pablo
+0108,El Compromiso
+0109,Aldea Pablo VI
+0110,La Esperanza No. 2
+0111,La Avanzada
+0112,Carpinelo
+0201,La Isla
+0202,El Playón de los Comuneros
+0203,Pablo VI
+0204,La Frontera
+0205,La Francia
+0206,Andalucía
+0207,Villa del Socorro
+0208,Villa Niza
+0209,Moscú No.1
+0210,Santa Cruz
+0211,La Rosa
+0301,La Salle
+0302,Las Granjas
+0303,Campo Valdés No. 2
+0304,Santa Inés
+0305,Raizal
+0306,El Pomar
+0307,Manrique Central No.2
+0308,Manrique Oriental
+0309,Versalles No.1
+0310,Versalles No.2
+0311,La Cruz
+0312,Oriente
+0313,María Cano Carambolas
+0314,San José de la Cima No.1
+0315,San José de la Cima No.2
+0401,Berlín
+0402,San Isidro
+0403,Palermo
+0404,Bermejal Los Alamos
+0405,Moravia
+0407,Sevilla
+0408,San Pedro
+0409,Manrique Central No.1
+0410,Campo Valdés No.1
+0411,Las Esmeraldas
+0412,La Piñuela
+0413,Aranjuez
+0414,Brasilia
+0415,Miranda
+0501,Toscana
+0502,Las Brisas
+0503,Florencia
+0504,Tejelo
+0505,Boyacá
+0507,Hector Abad Gómez
+0508,Belalcázar
+0509,Girardot
+0510,Tricentenario
+0511,Castilla
+0513,Francisco Antonio Zea
+0514,Alfonso López
+0517,Caribe
+0519,El Progreso
+0520,Oleoducto
+0601,Santander
+0602,Doce de Octubre No.1
+0603,Doce de Octubre No.2
+0604,Pedregal
+0605,La Esperanza
+0606,San Martín de Porres
+0607,Kennedy
+0608,Picacho
+0609,Picachito
+0610,Mirador del Doce
+0611,El Progreso No.2
+0612,El Triunfo
+0702,Cerro El Volador
+0703,San Germán
+0705,Facultad de Minas Universidad Nacional
+0706,La Pilarica
+0707,Bosques de San Pablo
+0708,Altamira
+0709,Córdoba
+0710,López de Mesa
+0711,El Diamante
+0712,Aures No.2
+0713,Aures No.1
+0714,Bello Horizonte
+0715,Villa Flora
+0716,Palenque
+0717,Robledo
+0718,Cucaracho
+0719,Fuente Clara
+0720,Santa Margarita
+0722,Olaya Herrera
+0723,Pajarito
+0724,Monteclaro
+0725,Nueva Villa de la Iguaná
+0801,Villas Hermosa
+0802,La Mansión
+0803,San Miguel
+0804,La Ladera
+0805,Batallón Girardot
+0806,Llanaditas
+0807,Los Mangos
+0808,Enciso
+0809,Sucre
+0810,El Pinal
+0811,Trece de Noviembre
+0812,La Libertad
+0813,Villatina
+0814,San Antonio
+0815,Las Estancias
+0816,Villa Turbay
+0817,La Sierra
+0819,Villa Liliam
+0901,Juan Pablo II
+0902,Barrios de Jesús
+0903,Bomboná No.2
+0904,Los Cerros El Vergel
+0905,Alejandro Echavarría
+0906,Barrio Caycedo
+0907,Buenos Aires
+0908,Miraflores
+0909,Cataluña
+0910,La Milagrosa
+0911,Gerona
+0912,El Salvador
+0913,Loreto
+0914,Asomadera No.1
+0915,Asomadera No.2
+0916,Asomadera No.3
+0917,Ocho de Marzo
+1001,Prado
+1003,Jesús Nazareno
+1004,El Chagualo
+1005,Estación Villa
+1006,San Benito
+1007,Guayaquil
+1008,Corazón de Jesús
+1011,Calle Nueva
+1012,Perpetuo Socorro
+1013,Barrio Colón
+1014,Las Palmas
+1015,Bomboná No.1
+1016,Boston
+1017,Los Ángeles
+1018,Villa Nueva
+1019,La Candelaria
+1020,San Diego
+1101,Carlos E. Restrepo
+1102,Suramericana
+1103,Naranjal
+1104,San Joaquín
+1105,Los Conquistadores
+1107,Bolivariana
+1108,Laureles
+1109,Las Acacias
+1110,La Castellana
+1111,Lorena
+1112,El Velódromo
+1113,Estadio
+1114,Los Colores
+1115,Cuarta Brigada
+1117,Florida Nueva
+1201,Ferrini
+1202,Calasanz
+1203,Los Pinos
+1204,La América
+1205,La Floresta
+1206,Santa Lucía
+1207,El Danubio
+1208,Campo Alegre
+1209,Santa Mónica
+1210,Barrio Cristóbal
+1211,Simón Bolivar
+1212,Santa Teresita
+1213,Calasanz Parte Alta
+1301,El Pesebre
+1302,Blanquizal
+1303,Santa Rosa de Lima
+1304,Los Alcázares
+1305,Metropolitano
+1306,La Pradera
+1307,Juan XXIII La Quiebra
+1308,San Javier No.2
+1309,San Javier No.1
+1310,Veinte de Julio
+1311,Belencito
+1312,Betania
+1313,El Corazón
+1314,La Independencia
+1315,Nuevos Conquistadores
+1316,El Salado
+1317,Eduardo Santos
+1318,Antonio Nariño
+1319,El Socorro
+1401,Barrio Colombia
+1403,Villa Carlota
+1404,Castropol
+1405,Lalinde
+1406,Las Lomas No.1
+1407,Las Lomas No.2
+1408,Altos del Poblado
+1409,El Tesoro
+1410,Los Naranjos
+1411,Los Balsos No.1
+1412,San Lucas
+1413,El Diamante No.2
+1414,El Castillo
+1415,Los Balsos No.2
+1416,Alejandría
+1417,La Florida
+1418,El Poblado
+1419,Manila
+1420,Astorga
+1421,Patio Bonito
+1422,La Aguacatala
+1423,Santa María de los Ángeles
+1502,Tenche
+1503,Trinidad
+1504,Santa Fé
+1507,Campo Amor
+1509,Cristo Rey
+1510,Guayabal
+1511,La Colina
+1601,Fátima
+1602,Rosales
+1603,Belén
+1604,Granada
+1605,San Bernardo
+1606,Las Playas
+1607,Diego Echavarría
+1608,La Mota
+1609,La Hondonada
+1610,El Rincón
+1611,La Loma de Los Bernal
+1612,La Gloria
+1613,Altavista
+1614,La Palma
+1615,Los Alpes
+1616,Las Violetas
+1617,Las Mercedes
+1618,Nueva Villa del Aburrá
+1619,Miravalle
+1620,El Nogal - Los Almendros
+1621,Cerro Nutibara
+5002,Palmitas cabecera
+6001,La Palma
+6002,San Cristóbal cabecera
+7001,Buga Patio Bonito
+7002,Aguas Frias
+9004,Barro Blanco
+8001,El Astillero
