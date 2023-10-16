@@ -2,6 +2,7 @@ blinker==1.6.3
 click==8.1.7
 colorama==0.4.6
 Flask==3.0.0
+flask-paginate==2023.10.8
 gitdb==4.0.10
 GitPython==3.1.37
 itsdangerous==2.1.2
