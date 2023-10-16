@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 from importlib import import_module
 from flask_paginate import Pagination, get_page_args
+from pathlib import Path
 from datetime import datetime
 from math import ceil
 import git
 import csv
+
+THIS_FOLDER = Path(__file__).parent.resolve()
 
 app = Flask(__name__)
 module = import_module("home.routes".format("home"))
@@ -29,9 +32,7 @@ def home():
 
 @app.route("/visualization", methods=["GET", "POST"])
 def visualization():
-    with open(
-        "src/DatosHistoricos.csv", mode="r", newline="", encoding="utf-8"
-    ) as file:
+    with open(THIS_FOLDER/"src/DatosHistoricos.csv", mode="r", newline="", encoding="utf-8") as file:
         csv_reader = csv.DictReader(file)
         data = [row for row in csv_reader]
 
