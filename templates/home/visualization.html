@@ -1,108 +1,159 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Visualización {% endblock %} 
+{% block title %} Visualización {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row align-items-center">
-            <div class="col-md-8 col-8 align-self-center">
-                <h3 class="page-title mb-0 p-0">Consulta de datos históricos de Accidentalidad</h3>
-                <div class="d-flex align-items-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Visualización</li>
-                        </ol>
-                    </nav>
-                </div>
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-md-8 col-8 align-self-center">
+            <h3 class="page-title mb-0 p-0">Consulta de datos históricos de Accidentalidad</h3>
+            <div class="d-flex align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Visualización</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
     <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- Start Page Content -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- Start Page Content -->
-        <!-- ============================================================== -->
-        <div class="row">
-            <!-- column -->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Basic Table</h4>
-                        <h6 class="card-subtitle">Add class <code>.table</code></h6>
-                        <div class="table-responsive">
-                            <table class="table user-table">
-                                <thead>
-                                    <tr>
-                                        <th class="border-top-0">#</th>
-                                        <th class="border-top-0">First Name</th>
-                                        <th class="border-top-0">Last Name</th>
-                                        <th class="border-top-0">Username</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Deshmukh</td>
-                                        <td>Prohaska</td>
-                                        <td>@Genelia</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Deshmukh</td>
-                                        <td>Gaylord</td>
-                                        <td>@Ritesh</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sanghani</td>
-                                        <td>Gusikowski</td>
-                                        <td>@Govinda</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Roshan</td>
-                                        <td>Rogahn</td>
-                                        <td>@Hritik</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Joshi</td>
-                                        <td>Hickle</td>
-                                        <td>@Maruti</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Nigam</td>
-                                        <td>Eichmann</td>
-                                        <td>@Sonu</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="filters">
+                <form method="get">
+                    <div class="filters-row">
+                        <input type="hidden" name="per_page" value="{{ request.args.get("per_page") }}">
+                        <div class="col-md-2">
+                            <label for="start_date_input">Fecha de inicio:</label>
+                            <input type="date" class="form-control" name="start_date" id="start_date_input"
+                                value="{{ request.args.get('start_date', '') }}" min="2014-01-01" max="2020-08-31">
                         </div>
+                        <div class="col-md-2">
+                            <label for="end_date_input">Fecha de fin:</label>
+                            <input type="date" class="form-control" name="end_date" id="end_date_input"
+                                value="{{ request.args.get('end_date', '') }}" min="2014-01-01" max="2020-08-31">
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="accident_type_select">Tipo de Accidente:</label>
+                            <select name="accident_type" class="form-control" id="accident_type_select">
+                                <option value="">Todos</option>
+                                <option value="Choque" {% if request.args.get('accident_type')=="Choque" %}selected{% endif %}>Choque</option>
+                                <option value="Atropello" {% if request.args.get('accident_type')=="Atropello" %}selected{% endif %}>Atropello</option>
+                                <option value="Caida Ocupante" {% if request.args.get('accident_type')=="Caida Ocupante" %}selected{% endif %}>Caida Ocupante</option>
+                                <option value="Volcamiento" {% if request.args.get('accident_type')=="Volcamiento" %}selected{% endif %}>Volcamiento</option>
+                                <option value="Incendio" {% if request.args.get('accident_type')=="Incendio" %}selected{% endif %}>Incendio</option>
+                                <option value="Otro" {% if request.args.get('accident_type')=="Otro" %}selected{% endif %}>Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Filtrar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card">
+
+                <div class="card-body">
+                    <!-- <h4 class="card-title">Basic Table</h4>
+                    <h6 class="card-subtitle">Add class</h6> -->
+                    <form method="get">
+                        <input type="hidden" name="start_date" value="{{ request.args.get('start_date', '') }}">
+                        <input type="hidden" name="end_date" value="{{ request.args.get('end_date', '') }}">
+                        <input type="hidden" name="accident_type" value="{{ request.args.get('accident_type', '') }}">
+                        <label for="per_page_select">Registros por página:</label>
+                        <select name="per_page" id="per_page_select" onchange="this.form.submit()">
+                            <option value="20" {% if per_page==20 %}selected{% endif %}>20</option>
+                            <option value="100" {% if per_page==100 %}selected{% endif %}>100</option>
+                            <option value="500" {% if per_page==500 %}selected{% endif %}>500</option>
+                            <option value="1000" {% if per_page==1000 %}selected{% endif %}>1000</option>
+                        </select>
+                    </form>
+                    <span class="pagination-info">
+                        Cantidad de Registros: {{ total_data }}
+                    </span>
+                    <div class="table-responsive">
+                        <table class="table user-table">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0">Barrio</th>
+                                    <th class="border-top-0">Nro. Comuna</th>
+                                    <th class="border-top-0">Tipo</th>
+                                    <th class="border-top-0">Gravedad</th>
+                                    <th class="border-top-0">Diseño</th>
+                                    <th class="border-top-0">Año</th>
+                                    <th class="border-top-0">Mes</th>
+                                    <th class="border-top-0">Día</th>
+                                    <th class="border-top-0">Latitud</th>
+                                    <th class="border-top-0">Longitud</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                <tr>
+                                    <td>{{ row['Barrio'] }}</td>
+                                    <td>{{ row['NroComuna'] }}</td>
+                                    <td>{{ row['Tipo'] }}</td>
+                                    <td>{{ row['Gravedad'] }}</td>
+                                    <td>{{ row['Diseno'] }}</td>
+                                    <td>{{ row['Anio'] }}</td>
+                                    <td>{{ row['Mes'] }}</td>
+                                    <td>{{ row['Dia'] }}</td>
+                                    <td>{{ row['latitud'] }}</td>
+                                    <td>{{ row['longitud'] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <span class="pagination-info {% if page == 1 %} disabled{% endif %}">
+                            {% if page != 1 %}
+                            <a href="{{ url_for('visualization', page=page-1, per_page=per_page, start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), accident_type=request.args.get('accident_type')) }}">Anterior</a>
+                            {% else %}
+                            <span>Anterior</span>
+                            {% endif %}
+                        </span>
+                        <span class="pagination-info">
+                            Página {{ page }} de {{ pagination.total }}
+                        </span>
+                        <span class="pagination-info {% if page == pagination.pages %} disabled{% endif %}">
+                            {% if page != pagination.pages %}
+                            <a href="{{ url_for('visualization', page=page+1, per_page=per_page, start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), accident_type=request.args.get('accident_type')) }}">Siguiente</a>
+                            {% else %}
+                            <span>Siguiente</span>
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End PAge Content -->
-        <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Container fluid  -->
+    <!-- End PAge Content -->
     <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
 
 {% endblock content %}
 
