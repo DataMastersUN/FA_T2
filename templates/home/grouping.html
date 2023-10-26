@@ -6,8 +6,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO_JBKNW8FXmtu0f1APiMUHd1KtxuiXJo&libraries=geometry"></script>
-    <script src="../js/map.js"></script>
+
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -36,7 +35,16 @@
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
-        
+        <div id="map" style="height: 400px; width: 100%;">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO_JBKNW8FXmtu0f1APiMUHd1KtxuiXJo&libraries=geometry"></script>
+            <script src="/static/assets/js/map.js"></script>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
         <!-- ============================================================== -->
         <!-- End PAge Content -->
         <!-- ============================================================== -->
