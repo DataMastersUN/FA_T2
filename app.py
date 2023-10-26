@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from importlib import import_module
 from flask_paginate import Pagination, get_page_args
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import ceil
 import git
 import csv
@@ -89,5 +89,62 @@ def is_within_date_range(row, start_date, end_date):
     )
     return start_date <= row_date <= end_date
 
-if __name__ == "__main__":
-    app.run()
+@app.route("/prediction", methods=["GET", "POST"])
+def prediction():
+    with open(THIS_FOLDER/"src/Predicciones2019-2023.csv", mode="r", newline="", encoding="utf-8") as file:
+        csv_reader = csv.DictReader(file)
+        data = [row for row in csv_reader]
+    result = 0
+    date = ''
+    prediction_by = request.args.get('prediction_by')
+    accident_type = request.args.get('accident_type')
+    print('prediction', prediction_by)
+
+    if prediction_by == 'day':
+        date = datetime.strptime(request.args.get('selected_day'), "%Y-%m-%d")
+       
+        for row in data:
+            if int(row['Anio']) == date.year and int(row['Mes']) == date.month and int(row['Dia']) == date.day:
+                result += int(float(row['Predic_' + accident_type]))
+            
+    elif prediction_by == 'week':
+        year, week = map(int, request.args.get('selected_week').split('-W'))
+        print(year, week)
+        days = get_days_in_week(year, week)
+
+        for row in data:
+            for day in days:
+                if (
+                int(row['Anio']) == day.year and
+                int(row['Mes']) == day.month and
+                int(row['Dia']) == day.day
+                ):
+                    result += int(float(row['Predic_' + accident_type]))
+   
+        for day in days:
+            if (
+                int(row['Anio']) == day.year and
+                int(row['Mes']) == day.month and
+                int(row['Dia']) == day.day
+            ):
+                result += int(float(row['Predic_' + accident_type]))
+        
+    elif prediction_by == 'month':
+        date = datetime.strptime(request.args.get('selected_month'), "%Y-%m")
+        for row in data:
+            if int(row['Anio']) == date.year and int(row['Mes']) == date.month:
+                result += int(float(row['Predic_' + accident_type]))
+
+    return render_template(
+        "home/prediction.html",
+        result=result,
+        accident_type=accident_type
+    )
+
+def get_days_in_week(year, week):
+    first_day = datetime.fromisocalendar(year, week, 1)
+    days_in_week = [first_day + timedelta(days=i) for i in range(7)]
+    return days_in_week
+
+
+

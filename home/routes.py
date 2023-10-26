@@ -6,7 +6,6 @@ from jinja2 import TemplateNotFound
 
 @blueprint.route('/index')
 def index():
-
     return render_template('home/index.html', segment='index')
 
 
