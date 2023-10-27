@@ -41,6 +41,10 @@
             <!-- ============================================================== -->
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO_JBKNW8FXmtu0f1APiMUHd1KtxuiXJo&libraries=geometry"></script>
             <script src="/static/assets/js/map.js"></script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO_JBKNW8FXmtu0f1APiMUHd1KtxuiXJo&callback=initMap"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='assets/js/barrios.json') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='assets/js/barrios-cluster.json') }}"></script>
+            
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->

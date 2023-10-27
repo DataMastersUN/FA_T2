@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, send_from_directory, render_template, request
 from importlib import import_module
 from flask_paginate import Pagination, get_page_args
 from pathlib import Path
@@ -6,12 +6,17 @@ from datetime import datetime, timedelta
 from math import ceil
 import git
 import csv
-
+import recurso
 THIS_FOLDER = Path(__file__).parent.resolve()
 
 app = Flask(__name__)
 module = import_module("home.routes".format("home"))
 app.register_blueprint(module.blueprint)
+
+@app.route('/static/<path:filename>')
+def send_static(filename):
+    return send_from_directory('static', filename)
+
 
 
 @app.route("/app_update", methods=["POST"])
@@ -24,11 +29,17 @@ def app_update():
     origin.pull()
     return "", 200
 
+if __name__ == '__main__':
+    app.run()
 
 @app.route("/")
 def home():
     return render_template("home/index.html")
 
+@app.route('/grouping')
+def grouping():
+    zonaBarrio_json = recurso.zonaBarrio_json
+    return render_template('grouping.html', zonaBarrio=zonaBarrio_json)
 
 @app.route("/visualization", methods=["GET", "POST"])
 def visualization():
@@ -145,6 +156,5 @@ def get_days_in_week(year, week):
     first_day = datetime.fromisocalendar(year, week, 1)
     days_in_week = [first_day + timedelta(days=i) for i in range(7)]
     return days_in_week
-
 
 
