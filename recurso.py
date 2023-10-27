@@ -1,9 +1,12 @@
 import json
+from pathlib import Path
 import pandas as pd
 import re
 from shapely.wkt import loads
 
-df = pd.read_csv("src/Barrios-cluster.csv")
+THIS_FOLDER = Path(__file__).parent.resolve()
+
+df = pd.read_csv(THIS_FOLDER/"src/Barrios-cluster.csv")
 barrios_c = df[['Barrio','Cluster']]
 json_data = barrios_c.to_json(orient='records')
 json_file = '/static/assets/js/barrios-cluster.json'
