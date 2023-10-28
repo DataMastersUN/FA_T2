@@ -4,7 +4,7 @@ function initMap() {
 
   // Opciones del mapa.
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
+    zoom: 15,
     center: centroZona,
     styles: [
       {
