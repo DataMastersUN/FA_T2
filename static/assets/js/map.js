@@ -16,18 +16,32 @@ function initMap() {
         featureType: 'road',
         elementType: 'labels',
         stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'administrative.locality',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'administrative.neighborhood',
+        elementType: 'labels.text',
+        stylers: [
+          {
+        visibility: 'off'
+          }
+        ]
       }
     ]
   });
 
-  function encontrarCluster(clusterData, nombreBarrio) {
-    for (var i = 0; i < clusterData.length; i++) {
-      if (clusterData[i].Barrio === nombreBarrio) {
-        return clusterData[i].Cluster;
-      }
+  function encontrarAtributo(datos, nombreBarrio, atributo) {
+    for (var i = 0; i < datos.length; i++) {
+        if (datos[i].Barrio === nombreBarrio) {
+            return datos[i][atributo];
+        }
     }
-    return null; // Si no se encuentra el cluster para el barrio
-  }
+    return 'Sin registro'; // Si no se encuentra el atributo para el barrio
+}
 
   function asignarColor(cluster) {
     switch (cluster) {
@@ -65,62 +79,79 @@ function initMap() {
     fetch('/static/assets/js/barrios.json') // Ruta relativa al archivo "barrios.json"
       .then(response => response.json())
       .then(data => {
-        for (var nombreBarrio in data) {
-          if (data.hasOwnProperty(nombreBarrio)) {
-            var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
-            var cluster = encontrarCluster(clusterData, nombreBarrio);
-            var color = asignarColor(cluster);
+        fetch('/static/assets/js/accident.json') // Ruta relativa al archivo "accidentes.json"
+          .then(response => response.json())  
+          .then(accidentes => {
 
-            // Crea el polígono en el mapa con el color correspondiente
-            var poligono = new google.maps.Polygon({
-              paths: zonaBarrio,
-              strokeColor: color, // Color del borde
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: color, // Color del relleno
-              fillOpacity: 0.35
-            });
+          for (var nombreBarrio in data) {
+            if (data.hasOwnProperty(nombreBarrio)) {
+              var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
+              var cluster = encontrarAtributo(clusterData, nombreBarrio, "Cluster");
+              var color = asignarColor(cluster);
 
-            // Agrega el polígono al mapa.
-            poligono.setMap(map);
-
-            poligono.addListener('click', function(event) {
-              var nombreBarrio = obtenerNombreDelBarrio(data, event.latLng);
-              console.log("NOMBRE"+nombreBarrio);
-              var cluster = encontrarCluster(clusterData, nombreBarrio);
-              console.log("NOMBRE"+cluster);
-              var infoWindow = new google.maps.InfoWindow({
-                content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
-                '<br>Accidentes: ' + 'null' + '<br>Heridos: ' + 'null'
+              // Crea el polígono en el mapa con el color correspondiente
+              var poligono = new google.maps.Polygon({
+                paths: zonaBarrio,
+                strokeColor: color, // Color del borde
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: color, // Color del relleno
+                fillOpacity: 0.35
               });
 
-              // Abre la ventana de información en las coordenadas del evento
-              infoWindow.setPosition(event.latLng);
-              infoWindow.open(map);
-            });
+              // Agrega el polígono al mapa.
+              poligono.setMap(map);
 
-            function obtenerNombreDelBarrio(data, latLng) {
-              for (var nombreBarrio in data) {
-                if (data.hasOwnProperty(nombreBarrio)) {
-                  var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
-                  if (estaDentroDelPoligono(zonaBarrio, latLng)) {
-                    return nombreBarrio;
+              poligono.addListener('click', function(event) {
+                var nombreBarrio = obtenerNombreDelBarrio(data, event.latLng);
+                var cluster = encontrarAtributo(clusterData, nombreBarrio, "Cluster");
+                var acc = encontrarAtributo(accidentes, nombreBarrio, "Con heridos");
+                var dead = encontrarAtributo(accidentes, nombreBarrio, "Con muertos");
+                var accdnt = encontrarAtributo(accidentes, nombreBarrio, "Total de accidentes");
+                
+                var nivel;
+                if (cluster == 1 || cluster == 2 ) nivel = "Baja";
+                else if (cluster == 3 || cluster == 4 || cluster == 5) nivel = "Alta";
+                else nivel = "Sin registro";
+
+                var infoWindow = new google.maps.InfoWindow({
+                  content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
+                  '<br>Heridos: ' + acc + '<br>Muertos: ' + dead + '<br>Total accidentes: ' +
+                  accdnt + '<br>Accidentalidad: ' + nivel
+                });
+
+                // Abre la ventana de información en las coordenadas del evento
+                infoWindow.setPosition(event.latLng);
+                infoWindow.open(map);
+              });
+
+              function obtenerNombreDelBarrio(data, latLng) {
+                for (var nombreBarrio in data) {
+                  if (data.hasOwnProperty(nombreBarrio)) {
+                    var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
+                    if (estaDentroDelPoligono(zonaBarrio, latLng)) {
+                      return nombreBarrio;
+                    }
                   }
                 }
+                return null;
               }
-              return null;
-            }
-            
-            function estaDentroDelPoligono(zonaBarrio, latLng) {
-              var latLngObj = new google.maps.LatLng(latLng.lat(), latLng.lng());
-              var polygon = new google.maps.Polygon({ paths: zonaBarrio });
-              var dentroDelPoligono = google.maps.geometry.poly.containsLocation(latLngObj, polygon);
-              return dentroDelPoligono;
-            }
-            
+              
+              function estaDentroDelPoligono(zonaBarrio, latLng) {
+                var latLngObj = new google.maps.LatLng(latLng.lat(), latLng.lng());
+                var polygon = new google.maps.Polygon({ paths: zonaBarrio });
+                var dentroDelPoligono = google.maps.geometry.poly.containsLocation(latLngObj, polygon);
+                return dentroDelPoligono;
+              }
+              
 
+            }
           }
-        }
+        }) 
+        .catch(error => {
+          console.error('Error al cargar el archivo "barrios.json":', error);
+        });
+
       })
       .catch(error => {
         console.error('Error al cargar el archivo "barrios.json":', error);

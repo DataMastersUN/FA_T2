@@ -36,10 +36,6 @@ if __name__ == '__main__':
 def home():
     return render_template("home/index.html")
 
-@app.route('/grouping')
-def grouping():
-    zonaBarrio_json = recurso.zonaBarrio_json
-    return render_template('grouping.html', zonaBarrio=zonaBarrio_json)
 
 @app.route("/visualization", methods=["GET", "POST"])
 def visualization():

@@ -35,7 +35,7 @@
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
-        <div id="map" style="height:750px; width: 100%;">
+        <div id="map" style="height:700px; width: 100%;">
             <!-- ============================================================== -->
             <!-- Start Page Content -->
             <!-- ============================================================== -->
@@ -44,6 +44,7 @@
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO_JBKNW8FXmtu0f1APiMUHd1KtxuiXJo&callback=initMap"></script>
             <script type="text/javascript" src="{{ url_for('static', filename='assets/js/barrios.json') }}"></script>
             <script type="text/javascript" src="{{ url_for('static', filename='assets/js/barrios-cluster.json') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='assets/js/accident.json') }}"></script>
             
             <!-- ============================================================== -->
             <!-- End PAge Content -->
@@ -52,6 +53,31 @@
         <!-- ============================================================== -->
         <!-- End PAge Content -->
         <!-- ============================================================== -->
+        
+        
+            <div class="mensaje">
+                En el mapa se muestran los barrios coloreados según el cluster 
+                o grupo al que pertenecen. Dando click izquierdo sobre un barrio,
+                se mostrará un mensaje con las estadísticas de accidentes en la zona,
+                nombre y clúster al que pertenece. Hay algunos barrios de los cuales 
+                no se tiene uno o varios registros, por lo que aparecen en color gris
+                y/o con el mensaje de 'Sin registro'.
+            </div>
+        
+  
+        <!-- Agrega un mensaje o leyenda en una esquina del mapa -->
+        <div id="mensaje-leyenda" style="position: absolute; top: 5px; right: 10px; background-color: white; padding: 10px; border: 1px solid #ccc;">
+            <h4>Leyenda Colores</h4>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #FF0000; margin-right: 5px; font-size: 10px;"></span> Cluster 1</p>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #00FF00; margin-right: 5px; font-size: 10px;"></span> Cluster 2</p>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #0000FF; margin-right: 5px; font-size: 10px;"></span> Cluster 3</p>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #FFD700; margin-right: 5px; font-size: 10px;"></span> Cluster 4</p>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #FF1493; margin-right: 5px; font-size: 10px;"></span> Cluster 5</p>
+            <p style="line-height: 0.3;"><span style="display: inline-block; width: 8px; height: 8px; background-color: #808080; margin-right: 5px; font-size: 10px;"></span> Otro</p>
+            <!-- Agrega más descripciones de colores según tus necesidades -->
+        </div>
+          
+
     </div>
     <!-- ============================================================== -->
     <!-- End Container fluid  -->

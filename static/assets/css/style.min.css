@@ -114,6 +114,27 @@ h1 {
     font-size: calc(1.35rem + 1.2vw)
 }
 
+.mensaje-container {
+    position: fixed; /* Fija el elemento en la ventana del navegador */
+    top: 50%; /* Coloca el elemento en el centro vertical */
+    left: 50%; /* Coloca el elemento en el centro horizontal */
+    transform: translate(-50%, -50%); /* Centra el elemento correctamente */
+    font-size: 5px; /* Tamaño del texto */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    color: #09131e; /* Color del texto */
+    padding: 20px; /* Margen interior para separar el contenido del borde */
+    border-radius: 10px; /* Borde redondeado */
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+  }
+  
+  .mensaje {
+    text-align: center; /* Centra el texto horizontalmente */
+    padding: 20px; /* Margen interior para separar el contenido del borde */
+    font-size: large;
+    font-weight: bold;
+  }
+  
+
 @media (min-width:1200px) {
 
     .h1,
