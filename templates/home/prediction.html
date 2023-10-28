@@ -61,7 +61,7 @@
                             <div class="col-md-2" id="month_container" style="display: none">
                                 <label for="month_input">Selecciona un Mes(Obligatorio):</label>
                                 <input value="{{ request.args.get('selected_month', '') }}" class="form-control" type="month" id="month_input" name="selected_month" min="2019-03" max="2023-12">
-                            </div>
+                            </div>                            
                             <div class="col-md-2">
                                 <label for="accident_type_select">Tipo de Accidente (Obligatorio):</label>
                                 <select required name="accident_type" class="form-control" id="accident_type_select">
@@ -72,8 +72,17 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <input type="submit" class="btn btn-info" value="Predecir">
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="submit" class="btn btn-info" value="Predecir">
+                                    </div>
+                                    {% if request.args.get('prediction_by') %}
+                                    <div class="col-md-2">
+                                        <a class="btn btn-danger" href="{{ url_for('prediction') }}">Limpiar</a>
+                                    </div>                            
+                                    {% endif %}
+                                </div>                                                                 
+                            </div>                                                       
                         </div>
                     </form>                               
                 </div>
