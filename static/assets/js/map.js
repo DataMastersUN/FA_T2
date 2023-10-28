@@ -8,18 +8,6 @@ function initMap() {
     center: centroZona
   });
 
-  var infoWindow = new google.maps.InfoWindow();
-
-  function mostrarInformacion(barrio, cluster) {
-    var contenido = `Barrio: ${barrio}<br>Cluster: ${cluster}`;
-    infoWindow.setContent(contenido);
-    infoWindow.open(map);
-  }
-
-  function ocultarInformacion() {
-    infoWindow.close();
-  }
-
   function encontrarCluster(clusterData, nombreBarrio) {
     for (var i = 0; i < clusterData.length; i++) {
       if (clusterData[i].Barrio === nombreBarrio) {
@@ -90,15 +78,16 @@ function initMap() {
 
             poligono.addListener('click', function(event) {
               var nombreBarrio = obtenerNombreDelBarrio(data, event.latLng);
-              var cluster = obtenerClusterDelBarrio(data, nombreBarrio);
-              
-                var infoWindow = new google.maps.InfoWindow({
-                  content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster
-                });
+              var cluster = obtenerClusterDelBarrio(clusterData, nombreBarrio);
 
-                infoWindow.setPosition(event.latLng);
-                infoWindow.open(map);
-              
+              var infoWindow = new google.maps.InfoWindow({
+                content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
+                '<br>Accidentes: ' + 'null' + '<br>Muertos: ' + 'null'
+              });
+
+              // Abre la ventana de información en las coordenadas del evento
+              infoWindow.setPosition(event.latLng);
+              infoWindow.open(map);
             });
 
             function obtenerNombreDelBarrio(data, latLng) {
@@ -121,12 +110,9 @@ function initMap() {
             }
             
             function estaDentroDelPoligono(zonaBarrio, latLng) {
-              
               var latLngObj = new google.maps.LatLng(latLng.lat(), latLng.lng());
-          
               var polygon = new google.maps.Polygon({ paths: zonaBarrio });
               var dentroDelPoligono = google.maps.geometry.poly.containsLocation(latLngObj, polygon);
-            
               return dentroDelPoligono;
             }
             
@@ -141,6 +127,4 @@ function initMap() {
   .catch(error => {
     console.error('Error al cargar el archivo "barrios-cluster.json":', error);
   });
-
-
 }
