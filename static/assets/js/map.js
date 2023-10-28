@@ -5,7 +5,19 @@ function initMap() {
   // Opciones del mapa.
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
-    center: centroZona
+    center: centroZona,
+    styles: [
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'road',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }
+    ]
   });
 
   function encontrarCluster(clusterData, nombreBarrio) {
@@ -59,7 +71,6 @@ function initMap() {
 
             // Encuentra el valor del cluster para el barrio actual
             var cluster = encontrarCluster(clusterData, nombreBarrio);
-
             // Asigna un color según el valor del cluster
             var color = asignarColor(cluster);
 
@@ -79,7 +90,7 @@ function initMap() {
             poligono.addListener('click', function(event) {
               var nombreBarrio = obtenerNombreDelBarrio(data, event.latLng);
               var cluster = obtenerClusterDelBarrio(clusterData, nombreBarrio);
-
+              console.log("NOMBRE"+cluster);
               var infoWindow = new google.maps.InfoWindow({
                 content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
                 '<br>Accidentes: ' + 'null' + '<br>Muertos: ' + 'null'
