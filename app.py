@@ -112,7 +112,7 @@ def prediction():
     print('prediction', prediction_by)
 
     if prediction_by == 'day':
-        date = datetime.strptime(request.args.get('selected_day'), "%Y-%m-%d")
+        date = datetime.strptime(request.args.get('selected_day'), "%Y-%m-%d").date()
        
         for row in data:
             if int(row['Anio']) == date.year and int(row['Mes']) == date.month and int(row['Dia']) == date.day:
@@ -120,7 +120,7 @@ def prediction():
             
     elif prediction_by == 'week':
         year, week = map(int, request.args.get('selected_week').split('-W'))
-        print(year, week)
+        date = f'Semana {week} del año {year}'
         days = get_days_in_week(year, week)
 
         for row in data:
@@ -137,11 +137,13 @@ def prediction():
         for row in data:
             if int(row['Anio']) == date.year and int(row['Mes']) == date.month:
                 result += int(float(row['Predic_' + accident_type]))
+        date = f'Mes {date.month} del año {date.year}'
 
     return render_template(
         "home/prediction.html",
         result=result,
-        accident_type=accident_type
+        accident_type=accident_type,
+        date=date
     )
 
 def get_days_in_week(year, week):
