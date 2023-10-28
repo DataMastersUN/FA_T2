@@ -63,6 +63,16 @@
                 no se tiene uno o varios registros, por lo que aparecen en color gris
                 y/o con el mensaje de 'Sin registro'.
             </div>
+            <br>
+            <br>
+            <h1 style="text-align: center;">Gráfico de agrupamiento</h1>
+            <div class="mensaje">
+                A continuación se muestra un gráfico de dispersión tridimensional. 
+                Los puntos se colorearán según el cluster o grupo, lo que permite 
+                visualizar cómo se agrupan o distribuyen los datos históricos utilizados en 
+                el desarrollo de esta 'app' en el espacio tridimensional 
+                en función de su asignación a diferentes clusters.
+            </div>
         
   
         <!-- Agrega un mensaje o leyenda en una esquina del mapa -->
@@ -77,6 +87,9 @@
             <!-- Agrega más descripciones de colores según tus necesidades -->
         </div>
           
+        <iframe src="{{ url_for('static', filename='html/eumio.html') }}" width="800" height="600" frameborder="0"></iframe>
+
+
 
     </div>
     <!-- ============================================================== -->
