@@ -68,10 +68,7 @@ function initMap() {
         for (var nombreBarrio in data) {
           if (data.hasOwnProperty(nombreBarrio)) {
             var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
-
-            // Encuentra el valor del cluster para el barrio actual
             var cluster = encontrarCluster(clusterData, nombreBarrio);
-            // Asigna un color según el valor del cluster
             var color = asignarColor(cluster);
 
             // Crea el polígono en el mapa con el color correspondiente
@@ -89,7 +86,8 @@ function initMap() {
 
             poligono.addListener('click', function(event) {
               var nombreBarrio = obtenerNombreDelBarrio(data, event.latLng);
-              var cluster = obtenerClusterDelBarrio(clusterData, nombreBarrio);
+              console.log("NOMBRE"+nombreBarrio);
+              var cluster = encontrarCluster(clusterData, nombreBarrio);
               console.log("NOMBRE"+cluster);
               var infoWindow = new google.maps.InfoWindow({
                 content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
@@ -109,13 +107,6 @@ function initMap() {
                     return nombreBarrio;
                   }
                 }
-              }
-              return null;
-            }
-            
-            function obtenerClusterDelBarrio(data, nombreBarrio) {
-              if (data.hasOwnProperty(nombreBarrio)) {
-                return data[nombreBarrio].Cluster;
               }
               return null;
             }
