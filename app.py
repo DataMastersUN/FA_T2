@@ -131,14 +131,6 @@ def prediction():
                 int(row['Dia']) == day.day
                 ):
                     result += int(float(row['Predic_' + accident_type]))
-   
-        for day in days:
-            if (
-                int(row['Anio']) == day.year and
-                int(row['Mes']) == day.month and
-                int(row['Dia']) == day.day
-            ):
-                result += int(float(row['Predic_' + accident_type]))
         
     elif prediction_by == 'month':
         date = datetime.strptime(request.args.get('selected_month'), "%Y-%m")
