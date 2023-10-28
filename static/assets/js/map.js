@@ -93,7 +93,7 @@ function initMap() {
               console.log("NOMBRE"+cluster);
               var infoWindow = new google.maps.InfoWindow({
                 content: 'Barrio: ' + nombreBarrio + '<br>Cluster: ' + cluster + 
-                '<br>Accidentes: ' + 'null' + '<br>Muertos: ' + 'null'
+                '<br>Accidentes: ' + 'null' + '<br>Heridos: ' + 'null'
               });
 
               // Abre la ventana de información en las coordenadas del evento
