@@ -7,7 +7,7 @@ from shapely.wkt import loads
 THIS_FOLDER = Path(__file__).parent.resolve()
 
 
-# with open('static/assets/js/barrios.json', 'r') as archivo:
+# with open(THIS_FOLDER/'static/assets/js/barrios.json', 'r') as archivo:
 #     data = json.load(archivo)
 
 # # Crear una nueva estructura de datos con 'Barrio' como clave
