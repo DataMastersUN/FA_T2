@@ -7,15 +7,15 @@ from shapely.wkt import loads
 THIS_FOLDER = Path(__file__).parent.resolve()
 
 
-with open('static/assets/js/barrios.json', 'r') as archivo:
-    data = json.load(archivo)
+# with open('static/assets/js/barrios.json', 'r') as archivo:
+#     data = json.load(archivo)
 
-# Crear una nueva estructura de datos con 'Barrio' como clave
-nombre_barrio, datos_barrio = list(data.items())[0]
-nueva = {'Barrio': nombre_barrio, **datos_barrio}
+# # Crear una nueva estructura de datos con 'Barrio' como clave
+# nombre_barrio, datos_barrio = list(data.items())[0]
+# nueva = {'Barrio': nombre_barrio, **datos_barrio}
 
-with open('nombres.json', 'w') as f:
-    json.dump(nueva, f, indent=4)
+# with open('nombres.json', 'w') as f:
+#     json.dump(nueva, f, indent=4)
 
 
 # # Leer el archivo CSV como un GeoDataFrame
