@@ -6,12 +6,16 @@ from shapely.wkt import loads
 
 THIS_FOLDER = Path(__file__).parent.resolve()
 
-df = pd.read_csv(THIS_FOLDER/"src/Barrios-cluster.csv")
-barrios_c = df[['Barrio', 'Con heridos', 'Con muertos', 'Total de accidentes']]
-json_data = barrios_c.to_json(orient='records')
-json_file = '/static/assets/js/barrios-cluster.json'
-with open('accident.json', 'w') as f:
-    f.write(json_data)
+
+with open('static/assets/js/barrios.json', 'r') as archivo:
+    data = json.load(archivo)
+
+# Crear una nueva estructura de datos con 'Barrio' como clave
+nombre_barrio, datos_barrio = list(data.items())[0]
+nueva = {'Barrio': nombre_barrio, **datos_barrio}
+
+with open('nombres.json', 'w') as f:
+    json.dump(nueva, f, indent=4)
 
 
 # # Leer el archivo CSV como un GeoDataFrame

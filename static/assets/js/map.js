@@ -4,7 +4,7 @@ function initMap() {
 
   // Opciones del mapa.
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 15,
+    zoom: 12,
     center: centroZona,
     styles: [
       {
@@ -30,13 +30,17 @@ function initMap() {
         visibility: 'off'
           }
         ]
-      }
+      },
+      {
+        featureType: 'transit.station',
+        stylers: [{ visibility: 'off' }] // Oculta las estaciones de transporte
+      },
     ]
   });
 
   function encontrarAtributo(datos, nombreBarrio, atributo) {
     for (var i = 0; i < datos.length; i++) {
-        if (datos[i].Barrio === nombreBarrio) {
+        if (datos[i].Barrio.toLowerCase() === nombreBarrio.toLowerCase()) {
             return datos[i][atributo];
         }
     }
@@ -86,6 +90,7 @@ function initMap() {
           for (var nombreBarrio in data) {
             if (data.hasOwnProperty(nombreBarrio)) {
               var zonaBarrio = convertirZonaBarrio(data, nombreBarrio);
+              console.log(nombreBarrio);
               var cluster = encontrarAtributo(clusterData, nombreBarrio, "Cluster");
               var color = asignarColor(cluster);
 
@@ -143,7 +148,6 @@ function initMap() {
                 var dentroDelPoligono = google.maps.geometry.poly.containsLocation(latLngObj, polygon);
                 return dentroDelPoligono;
               }
-              
 
             }
           }

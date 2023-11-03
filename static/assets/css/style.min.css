@@ -114,6 +114,20 @@ h1 {
     font-size: calc(1.35rem + 1.2vw)
 }
 
+table {
+    width: 100%;
+    border-collapse: separate; /* Separar los bordes de las celdas */
+    border-spacing: 10px; /* Espacio entre las celdas */
+    text-align: center; /* Centrar el contenido horizontalmente */
+}
+th, td {
+    width: 26%;
+    padding: 4px; /* Espacio dentro de las celdas */
+}
+table td:nth-child(1) {
+    width: 20%; 
+}
+
 .mensaje-container {
     position: fixed; /* Fija el elemento en la ventana del navegador */
     top: 50%; /* Coloca el elemento en el centro vertical */
