@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from math import ceil
 import git
 import csv
-import recurso
 THIS_FOLDER = Path(__file__).parent.resolve()
 
 app = Flask(__name__)
