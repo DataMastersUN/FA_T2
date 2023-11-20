@@ -100,45 +100,37 @@ def prediction():
     with open(THIS_FOLDER/"src/Predicciones2019-2023.csv", mode="r", newline="", encoding="utf-8") as file:
         csv_reader = csv.DictReader(file)
         data = [row for row in csv_reader]
-    result = 0
-    date = ''
-    prediction_by = request.args.get('prediction_by')
-    accident_type = request.args.get('accident_type')
-    print('prediction', prediction_by)
+    
+    start_date = request.args.get("start_date")
+    end_date = request.args.get("end_date")
+    accident_type = request.args.get("accident_type")
 
-    if prediction_by == 'day':
-        date = datetime.strptime(request.args.get('selected_day'), "%Y-%m-%d").date()
-       
-        for row in data:
-            if int(row['Anio']) == date.year and int(row['Mes']) == date.month and int(row['Dia']) == date.day:
-                result += int(float(row['Predic_' + accident_type]))
-            
-    elif prediction_by == 'week':
-        year, week = map(int, request.args.get('selected_week').split('-W'))
-        date = f'Semana {week} del año {year}'
-        days = get_days_in_week(year, week)
+    filtered_data = filter_data(data, start_date, end_date, None)
+    total_data = len(filtered_data)
 
-        for row in data:
-            for day in days:
-                if (
-                int(row['Anio']) == day.year and
-                int(row['Mes']) == day.month and
-                int(row['Dia']) == day.day
-                ):
-                    result += int(float(row['Predic_' + accident_type]))
-        
-    elif prediction_by == 'month':
-        date = datetime.strptime(request.args.get('selected_month'), "%Y-%m")
-        for row in data:
-            if int(row['Anio']) == date.year and int(row['Mes']) == date.month:
-                result += int(float(row['Predic_' + accident_type]))
-        date = f'Mes {date.month} del año {date.year}'
+    page, per_page, offset = get_page_args(
+        page_parameter="page", per_page_parameter="per_page"
+    )
+    try:
+        per_page = int(request.args.get("per_page", 20))
+    except ValueError:
+        per_page = 20
+    total = ceil(total_data / per_page)
+    pagination_data = filtered_data[offset : offset + per_page]
+
+    pagination = Pagination(
+        page=page, per_page=per_page, total=total, css_framework="bootstrap4"
+    )
 
     return render_template(
         "home/prediction.html",
-        result=result,
-        accident_type=accident_type,
-        date=date
+        data=pagination_data,
+        page=page,
+        per_page=per_page,
+        total_data=total_data,
+        pagination=pagination,
+        filtered_data=filtered_data,
+        accident_type=accident_type
     )
 
 def get_days_in_week(year, week):

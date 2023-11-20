@@ -39,64 +39,112 @@
             <!-- column -->
             <div class="col-sm-12">
                 <div class="filters">
-                    <form method="get">
-                        <div class="filters-row">
-                            <div class="col-md-2">
-                                <label for="prediction_select">Predecir por(Obligatorio):</label>
-                                <select required name="prediction_by" class="form-control" id="prediction_select">
-                                    <option value="" selected="true" disabled="disabled">Selecciona</option>
-                                    <option value="day" {% if request.args.get('prediction_by')=="day" %}selected{% endif %}>Día</option>
-                                    <option value="week" {% if request.args.get('prediction_by')=="week" %}selected{% endif %}>Semana</option>
-                                    <option value="month" {% if request.args.get('prediction_by')=="month" %}selected{% endif %}>Mes</option>
-                                </select>
+                    <div class="filters">
+                        <form method="get">
+                            <div class="filters-row">
+                                <input type="hidden" name="per_page" value="{{ request.args.get("per_page") }}">
+                                <div class="col-md-2">
+                                    <label for="start_date_input">Fecha de inicio:</label>
+                                    <input type="date" class="form-control" name="start_date" id="start_date_input"
+                                        value="{{ request.args.get('start_date', '') }}" min="2019-03-01" max="2023-12-31">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="end_date_input">Fecha de fin:</label>
+                                    <input type="date" class="form-control" name="end_date" id="end_date_input"
+                                        value="{{ request.args.get('end_date', '') }}" min="2019-03-01" max="2023-12-31">
+        
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="accident_type_select">Tipo de Accidente:</label>
+                                    <select required name="accident_type" class="form-control" id="accident_type_select">
+                                        <option value="Choque" {% if request.args.get('accident_type')=="Choque" %}selected{% endif %}>Choque</option>
+                                        <option value="Atropello" {% if request.args.get('accident_type')=="Atropello" %}selected{% endif %}>Atropello</option>
+                                        <option value="Caida Ocupante" {% if request.args.get('accident_type')=="Caida Ocupante" %}selected{% endif %}>Caida Ocupante</option>
+                                        <option value="Volcamiento" {% if request.args.get('accident_type')=="Volcamiento" %}selected{% endif %}>Volcamiento</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" class="btn btn-info" value="Predecir">
+                                </div>
                             </div>
-                            <div class="col-md-2" id="year_month_container" style="display: none">
-                                <label for="day_input">Selecciona un Día(Obligatorio):</label>
-                                <input value="{{ request.args.get('selected_day', '') }}" class="form-control" type="date" id="day_input" name="selected_day" min="2019-03-01" max="2023-12-31">
-                            </div>
-                            <div class="col-md-2" id="week_container" style="display: none">
-                                <label for="week_input">Selecciona una Semana:(Obligatorio)</label>
-                                <input value="{{ request.args.get('selected_week', '') }}" class="form-control" type="week" id="week_input" name="selected_week" min="2019-W09" max="2023-W52">
-                            </div>
-                            <div class="col-md-2" id="month_container" style="display: none">
-                                <label for="month_input">Selecciona un Mes(Obligatorio):</label>
-                                <input value="{{ request.args.get('selected_month', '') }}" class="form-control" type="month" id="month_input" name="selected_month" min="2019-03" max="2023-12">
-                            </div>                            
-                            <div class="col-md-2">
-                                <label for="accident_type_select">Tipo de Accidente (Obligatorio):</label>
-                                <select required name="accident_type" class="form-control" id="accident_type_select">
-                                    <option value="choque" {% if request.args.get('accident_type')=="choque" %}selected{% endif %}>Choque</option>
-                                    <option value="atropello" {% if request.args.get('accident_type')=="atropello" %}selected{% endif %}>Atropello</option>
-                                    <option value="caida" {% if request.args.get('accident_type')=="caida" %}selected{% endif %}>Caida Ocupante</option>
-                                    <option value="volcamiento" {% if request.args.get('accident_type')=="volcamiento" %}selected{% endif %}>Volcamiento</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <input type="submit" class="btn btn-info" value="Predecir">
-                                    </div>
-                                    {% if request.args.get('prediction_by') %}
-                                    <div class="col-md-2">
-                                        <a class="btn btn-danger" href="{{ url_for('prediction') }}">Limpiar</a>
-                                    </div>                            
-                                    {% endif %}
-                                </div>                                                                 
-                            </div>                                                       
-                        </div>
-                    </form>                               
-                </div>
-                {% if result != 0 %}
-                {% if accident_type %}
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <h1>Se predicen <b>{{ result }}</b> Accidentes tipo {{ accident_type }} para la fecha: {{ date }}</h1>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                {% endif %}
-                {% endif %}
+                <div class="card">
+                    {% if request.args.get('accident_type') %}
+
+                    <div class="card-body">
+                        <form method="get">
+                            <input type="hidden" name="start_date" value="{{ request.args.get('start_date', '') }}">
+                            <input type="hidden" name="end_date" value="{{ request.args.get('end_date', '') }}">
+                            <input type="hidden" name="accident_type" value="{{ request.args.get('accident_type', '') }}">
+                            <label for="per_page_select">Registros por página:</label>
+                            <select name="per_page" id="per_page_select" onchange="this.form.submit()">
+                                <option value="20" {% if per_page==20 %}selected{% endif %}>20</option>
+                                <option value="100" {% if per_page==100 %}selected{% endif %}>100</option>
+                                <option value="500" {% if per_page==500 %}selected{% endif %}>500</option>
+                            </select>
+                        </form>
+                        <span class="pagination-info">
+                            Cantidad de Registros: {{ total_data }}
+                        </span>
+                        <div class="table-responsive">
+                            <table class="table user-table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">Fecha</th>
+                                        {% if request.args.get('accident_type') == 'Atropello' %}<th class="border-top-0">Atropellos</th>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Choque' %}<th class="border-top-0">Choques</th>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Caida Ocupante' %}<th class="border-top-0">Caídas</th>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Volcamiento' %}<th class="border-top-0">Volcamientos</th>{% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in data %}
+                                    <tr>
+                                        <td>{{ row['Anio'] + '/' + row['Mes'] + '/' + row['Dia'] }}</td>
+                                        {% if request.args.get('accident_type') == 'Atropello' %}<td>{{ row['Predic_atropello'] }}</td>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Choque' %} <td>{{ row['Predic_choque'] }}</td>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Caida Ocupante' %}<td>{{ row['Predic_caida'] }}</td>{% endif %}
+                                        {% if request.args.get('accident_type') == 'Volcamiento' %}<td>{{ row['Predic_volcamiento'] }}</td>{% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <span class="pagination-info {% if page == 1 %} disabled{% endif %}">
+                                {% if page != 1 %}
+                                <a href="{{ url_for('prediction', page=page-1, per_page=per_page, start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), accident_type=request.args.get('accident_type')) }}">Anterior</a>
+                                {% else %}
+                                <span>Anterior</span>
+                                {% endif %}
+                            </span>
+                            <span class="pagination-info">
+                                Página {{ page }} de {{ pagination.total }}
+                            </span>
+                            <span class="pagination-info {% if page == pagination.pages %} disabled{% endif %}">
+                                {% if page != pagination.pages %}
+                                <a href="{{ url_for('prediction', page=page+1, per_page=per_page, start_date=request.args.get('start_date', ''), end_date=request.args.get('end_date', ''), accident_type=request.args.get('accident_type')) }}">Siguiente</a>
+                                {% else %}
+                                <span>Siguiente</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <h1 style="text-align: center;">Gráfico de accidentes</h1>
+                    <div class="mensaje">
+                        A continuación se muestra un gráfico de series de tiempo, proporcionando la posibilidad
+                        de detallar el comportamiento de los accidentes en el rango de tiempo dado. 
+                    </div>
+
+                    <div id="time-series-chart" style="height:638px; width: 100%;"></div>
+                    {% endif %}
+                </div>
+                
             </div>
         </div>
         <!-- ============================================================== -->
@@ -108,46 +156,45 @@
     <!-- ============================================================== -->
 
 {% endblock content %}
-
 {% block javascripts %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const predictionSelected = urlParams.get('prediction_by');
+    var filteredData = {{ filtered_data | tojson | safe }};
+    var accidentType = {{ accident_type | tojson | safe }};
+    
+    var dates = [];
+    var values = [];
 
-    const predictionSelect = document.getElementById('prediction_select');
-    const yearMonthContainer = document.getElementById('year_month_container');
-    const weekContainer = document.getElementById('week_container');
-    const monthContainer = document.getElementById('month_container');
-    const yearMonthInput = document.getElementById('day_input');
-    const weekInput = document.getElementById('week_input');
-    const monthInput = document.getElementById('month_input');
-    checkFields()
-
-    predictionSelect.addEventListener('change', function() {
-        checkFields()
-    });
-
-    function checkFields() {
-        yearMonthContainer.style.display = 'none';
-        weekContainer.style.display = 'none';
-        monthContainer.style.display = 'none';
-
-       yearMonthInput.removeAttribute('required');
-        weekInput.removeAttribute('required');
-        monthInput.removeAttribute('required');
-        
-        const selectedValue = predictionSelect.value;
-        
-        if (selectedValue === 'day') {
-            yearMonthContainer.style.display = 'block';
-            yearMonthInput.setAttribute('required', 'required');
-        } else if (selectedValue === 'week') {
-            weekContainer.style.display = 'block';
-            weekInput.setAttribute('required', 'required');
-        } else if (selectedValue === 'month') {
-            monthContainer.style.display = 'block';
-            monthInput.setAttribute('required', 'required');
+    for (var i = 0; i < filteredData.length; i++) {
+        dates.push(filteredData[i]['Mes'] + '/' + filteredData[i]['Dia'] + '/' + filteredData[i]['Anio']);
+        if (accidentType == 'Choque') {
+            values.push(filteredData[i]['Predic_choque']);
+        } else if (accidentType == 'Atropello') {
+            values.push(filteredData[i]['Predic_atropello']); 
+        } else if (accidentType == 'Caida Ocupante') {
+            values.push(filteredData[i]['Predic_caida']); 
+        } else if (accidentType == 'Volcamiento') {
+            values.push(filteredData[i]['Predic_volcamiento']);
         }
     }
-</script> 
-{% endblock javascripts %}
+
+    var layout = {
+        title: 'Gráfico de Series Temporales',
+        xaxis: {
+            title: 'Fechas'
+        },
+        yaxis: {
+            title: 'Cantidad de Accidentes'
+        }
+    };
+
+    var trace = {
+        x: dates,
+        y: values,
+        type: 'scatter'
+    };
+
+    Plotly.newPlot('time-series-chart', [trace], layout);
+</script>
+{% endblock javascripts %} 
+
